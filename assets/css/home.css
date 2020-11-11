@@ -7,7 +7,7 @@ body {
 }
 
 .intro {
-  background-image: url(/assets/images/background.jpg);
+  background-image: url(blog/assets/images/background.jpg);
   background-size: cover;
   place-items: center;
   display: flex;
