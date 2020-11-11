@@ -3,7 +3,7 @@
 </head>
 <div class="card">
     <div class="container">
-      <a href="blog/{{include.url}}" style="text-decoration: none;">
+      <a href="blog/{{include.url | relative_url}}" style="text-decoration: none;">
       <h2><b>{{include.title}}</b></h2>
       </a>
       <p>{{ include.date | date: " %b %d, %y"}}</p>

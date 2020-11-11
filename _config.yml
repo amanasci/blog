@@ -24,7 +24,10 @@ description: >- # this means to ignore newlines until "baseurl:"
   But, I guess you should try reading, it'll be fun. I usually talk about STEM subjects. Why? Because STEM is fun!
 baseurl: "blog" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-
+disqus:
+  # Leave shortname blank to disable comments site-wide.
+  # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
+  shortname: ascilabs
 # Build settings
 theme: minima
 plugins:
@@ -32,10 +35,7 @@ plugins:
 
 
 # Disqus Comments
-disqus:
-  # Leave shortname blank to disable comments site-wide.
-  # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
-  shortname: ascilabs
+
 
   # Build settings
 markdown: kramdown
