@@ -1,0 +1,16 @@
+<head>
+    <link rel="stylesheet" href="{{site.url}}/{{site.baseurl}}/assets/css/card.css">
+</head>
+<div class="card">
+    <div class="container">
+      <a href="{{include.url}}" style="text-decoration: none;">
+      <h2><b>{{include.title}}</b></h2>
+      <p>{{ include.date | date: " %b %d, %y"}}</p>
+      <p>{{include.desc}}</p></a>
+    </div>
+    <div class="button">
+        <a href="{{include.url}}">
+            READ
+        </a>
+    </div>
+</div> 

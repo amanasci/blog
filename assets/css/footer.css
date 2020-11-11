@@ -1,0 +1,27 @@
+.footer {
+  background-color: rgb(8, 0, 122);
+  overflow: hidden;
+  display: flex;
+  place-items: center;
+  justify-content: space-around;
+}
+.footer .tagline {
+  float: inline-start;
+  display: block;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.footer a {
+  float: inline-end;
+  display: block;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 5px;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 22px;
+}

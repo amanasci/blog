@@ -1,0 +1,11 @@
+<head>
+    <link rel="stylesheet" href="{{site.url}}/{{site.baseurl}}/assets/css/minicard.css">
+</head>
+<div class="card">
+    <div class="container">
+      <a href="{{include.url}}" style="text-decoration: none;">
+      <h2><b>{{include.title}}</b></h2>
+      </a>
+      <p>{{ include.date | date: " %b %d, %y"}}</p>
+    </div>
+</div> 

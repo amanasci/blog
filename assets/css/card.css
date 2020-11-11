@@ -1,0 +1,46 @@
+.card {
+  box-shadow: 0 4px 8px 0 rgba(8, 0, 122, 0.5);
+  transition: 250ms;
+  border-radius: 5px; /* 5px rounded corners */
+  width: 300px;
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 15px;
+  box-sizing: border-box;
+  color: black;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 28px 56px 0 rgba(8, 0, 122, 0.5);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 10px;
+  width: 250px;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button a {
+  background: rgb(8, 0, 122);
+  padding: 10px 15px;
+  margin-top: 2px;
+  margin: 0.25em;
+  border-radius: 2px;
+  font-size: large;
+  color: white;
+}
+
+.button a:hover {
+  background: rgb(24, 15, 156);
+}
+
+a {
+  color: black;
+}

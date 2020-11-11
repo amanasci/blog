@@ -1,0 +1,45 @@
+@import "highlighter.css";
+@import url("https://fonts.googleapis.com/css2?family=Fresca&display=swap");
+
+body {
+  padding: 0px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Fresca", cursive;
+  font-size: large;
+  word-spacing: 5px;
+  line-height: 30px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.contain {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 5% 20%;
+  flex-wrap: wrap;
+}
+
+.highlight {
+  border-radius: 3px;
+  padding: 5px;
+  background: rgb(0, 0, 0);
+}
+
+.highlighter-rouge {
+  background: rgb(255, 255, 255);
+  border-style: solid;
+  border-color: blue;
+  border-width: 1px;
+  font-weight: normal;
+}
+
+blockquote {
+  background-color: grey;
+  color: aliceblue;
+}

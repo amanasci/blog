@@ -1,0 +1,30 @@
+<head>
+    <title>{{site.title}}</title>
+    <link rel="stylesheet" href="assets/css/home.css">
+    <script src="assets/js/home.js"></script>
+</head>
+{% include nav.html %}
+
+<div class="intro">
+    <div>
+        <h2 style="padding:10px;">
+            Hello! This is {{site.title}}.<br>
+            A place where I share random things that are interesting according to me. <br>
+            Thanks for coming here! 
+        </h2>
+    </div>
+    
+</div>
+<div id="posts-heading">
+    <h2>
+        Posts
+    </h2>
+</div>
+<div class="wrap" id="wrap">
+    {% for post in site.posts %}
+        {% include card.html title=post.title desc=post.synopsis url=post.url date=post.date%}
+    {% endfor %}
+
+</div>
+
+{% include footer.html %}

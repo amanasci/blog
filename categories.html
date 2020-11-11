@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<title>Categories</title>
+<link rel="stylesheet" href="{{site.url}}/{{site.baseurl}}/assets/css/categories.css">
+<!-- "{{site.categories.Welcome[0].categories[1]}}" -->
+<body>
+    <h2> Random: </h2>
+        <div class="catlist">
+            {% for post in site.posts %}
+                {% for tagss in post.categories %}
+                    {% if tagss == "random" %}        
+                        {% include minicard.html title=post.title date=post.date url=post.url %} 
+                    {% endif %}            
+                {% endfor %}        
+            {% endfor %}
+         </div>
+
+
+
+    
+
+</body>

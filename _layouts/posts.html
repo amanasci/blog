@@ -1,0 +1,36 @@
+---
+layout: default
+---  
+<head>
+    <title>{{page.title}}</title>
+</head>
+
+<h1 style="font-size:50px;"> {{page.title}} </h1>
+
+<div class="tags" style="display: inline;">
+    <h3> Categories: {%for tag in page.categories%}
+        <span style="text-decoration:none;  border-style: solid; border-color: green; border-width:1px;">{{tag}}</span>
+        {%endfor%} </h3>
+    
+</div>
+
+<div class="content">
+    {{content}}
+</div>
+
+<hr style=" margin: 5%"> 
+
+{% include share.html %}
+
+<div class="pagenav"
+style="display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto; text-decoration:none;">
+    <a href="{{page.previous.url}}" style="text-decoration:none; background-color: rgb(8, 0, 122); padding:5px;
+     font-weight: bold; font-size: 20px; color: white; text-align: left;">Previous</a>
+    <a href="{{page.next.url}}" style="text-decoration:none; background-color: rgb(8, 0, 122); padding:5px;
+    font-weight: bold; font-size: 20px; color:white; text-align: right;">Next</a>
+</div>
+
+{% if site.disqus.shortname %}
+  {% include disqus_comments.html %}
+{% endif %}
+
