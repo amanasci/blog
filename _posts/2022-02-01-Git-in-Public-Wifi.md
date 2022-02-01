@@ -1,7 +1,7 @@
 ---
 layout: posts
 date: 2022-02-01
-title: "Git in PUblic Wifi"
+title: "Git in Public Wifi"
 categories:
     - git
 synopsis: Problems I faced while trying to use Git on Public Wifi and solution.
