@@ -2,8 +2,8 @@
 name: "Asci Labs"
 title: "Asci Labs"
 description: "A personal blog from amanasci."
-logo: ''
-favicon: ''
+logo: '/assets/images/logo.png'
+favicon: '/assets/images/favicon.png'
 baseurl: /blog
 google_analytics: ''
 disqus: ''

@@ -4,7 +4,7 @@ title:  "Git in Public Wifi"
 author: amanasci
 categories: [ Git, Network ]
 tags: [tutorial,problems]
-image: assets/images/11.jpg
+image: assets/images/wall.png
 description: "Problems I faced while trying to use Git on Public Wifi and solution."
 featured: true
 hidden: true
