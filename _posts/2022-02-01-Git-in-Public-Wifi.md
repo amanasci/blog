@@ -10,6 +10,7 @@ description: "Problems I faced while trying to use Git on Public Wifi and soluti
 featured: true
 hidden: true
 rating: 4.5
+
 ---
 
 So recently ( well not recently, but it's ok ) when I moved to my hostel, I had to use the free public wifi.  It was kinda okayish and speed was just decent.  But there are huge problems with this kinda public wifi systems. 
@@ -62,18 +63,3 @@ So that's all for this post. I'll post something again if I find something fun a
 <br> <br>
 Signing out<br>
 amanasci ( The Demon in your nightmare? )
-
-```html
----
-layout: post
-title:  "Git in Public Wifi"
-author: amanasci
-categories: [ Git, Network ]
-tags: [tutorial,problems]
-image: assets/images/11.jpg
-description: "Problems I faced while trying to use Git on Public Wifi and solution."
-featured: true
-hidden: true
-rating: 4.5
----
-```
