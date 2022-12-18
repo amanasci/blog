@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "Git in Public Wifi"
