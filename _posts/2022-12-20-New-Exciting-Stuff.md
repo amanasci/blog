@@ -4,7 +4,7 @@ title:  "New Exciting Stuff"
 author: amanasci
 categories: [ New Stuff ]
 tags: [New]
-image: assets/images/wall.png
+image: assets/images/WayDroid.jpg
 description: "Things I found exciting on Hacker News and would like to remember for future use."
 featured: true
 hidden: true
