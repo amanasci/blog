@@ -56,4 +56,4 @@ And after this it works like charm. It forces SSH to use port 443 when on ssh.gi
 So that's all for this post. I'll post something again if I find something fun and new. 
 <br> <br>
 Signing out<br>
-amanasci ( The Demon in your nightmare? )
+amanasci
