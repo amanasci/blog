@@ -43,7 +43,7 @@ export default function Home() {
             </div>
 
             <p style={{ margin: 0 }}>
-              {post.meta.description || post.meta.excerpt || "No description available."}
+              {post.meta.synopsis || post.meta.excerpt || "No description available."}
             </p>
 
             <Link href={`/blog/${post.slug}`} style={{
