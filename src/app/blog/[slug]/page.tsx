@@ -14,6 +14,12 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 // Components to be used in MDX
 const components = {
     // Add custom components here if needed, e.g. <Callout />
+    img: (props: any) => (
+        <img
+            {...props}
+            style={{ display: 'block', maxWidth: '100%', height: 'auto', ...props.style }}
+        />
+    ),
 };
 
 export async function generateStaticParams() {
