@@ -1,67 +1,85 @@
 import Link from 'next/link';
-import { getAllPosts } from '@/lib/mdx';
-import { format, parseISO, isValid } from 'date-fns';
+import { getAllPosts, getFeaturedPost } from '@/lib/mdx';
+import PostCard from '@/components/PostCard';
+import CategoryPill from '@/components/CategoryPill';
+import { postPath } from '@/lib/paths';
+import { formatDate } from '@/lib/format';
+import { site } from '@/lib/site';
 
 export default function Home() {
   const posts = getAllPosts();
+  const featured = getFeaturedPost(posts);
+  const latest = posts.filter((post) => post.slug !== featured?.slug).slice(0, 5);
+
+  const featuredAbstract =
+    featured?.meta.abstract ?? featured?.meta.synopsis ?? featured?.meta.description ?? '';
 
   return (
-    <div className="posts-container">
-      <section className="intro">
-        <h1 style={{ marginBottom: "0.5rem" }}>Asci Labs</h1>
-        <p className="subtitle" style={{ color: "var(--text-secondary)", fontSize: "1.2rem" }}>
-          Explorations in code, physics, and design.
+    <div className="front-page">
+      <section className="lede">
+        <p className="section-label">{site.volume}</p>
+        <h1 className="lede__title">
+          An independent journal of physics, computation, and curiosity.
+        </h1>
+        <p className="lede__text">
+          {site.name} collects technical research essays and exploratory notes: worked
+          problems, field notes, and the occasional detour. Written to be read the way a
+          paper is read, with care and with the working shown.
+        </p>
+        <p className="lede__meta meta">
+          <span>{posts.length} contributions</span>
+          <span className="meta__sep" aria-hidden="true" />
+          <span>Published from {new Date().getFullYear()}</span>
         </p>
       </section>
 
-      <div style={{ marginTop: "4rem" }}>
-        {posts.map((post) => (
-          <article key={post.slug} style={{ marginBottom: "3rem" }}>
-            <Link href={`/blog/${post.slug}`} style={{ display: "block", textDecoration: "none" }}>
-              <h2 style={{
-                marginTop: 0,
-                marginBottom: "0.5rem",
-                fontSize: "1.5rem",
-                cursor: "pointer"
-              }} className="post-title">
-                {post.meta.title}
-              </h2>
+      {featured ? (
+        <section className="front-section" aria-labelledby="featured-heading">
+          <div className="front-section__head">
+            <h2 id="featured-heading" className="section-label">
+              Featured
+            </h2>
+            <Link className="front-section__more" href="/archive">
+              All articles →
             </Link>
+          </div>
 
-            <div style={{
-              fontSize: "0.9rem",
-              color: "var(--text-secondary)",
-              marginBottom: "0.5rem",
-              fontFamily: "var(--font-sans)"
-            }}>
-              <time dateTime={post.meta.date}>
-                {post.meta.date ? (() => {
-                  const parsedDate = parseISO(post.meta.date);
-                  return isValid(parsedDate) ? format(parsedDate, 'LLLL d, yyyy') : 'No Date';
-                })() : 'No Date'}
+          <article className="featured">
+            <div className="featured__kicker">
+              {(featured.meta.categories ?? []).map((category) => (
+                <CategoryPill key={category} category={category} />
+              ))}
+              <time className="post-card__date" dateTime={featured.meta.date}>
+                {formatDate(featured.meta.date)}
               </time>
             </div>
-
-            <p style={{ margin: 0 }}>
-              {post.meta.synopsis || post.meta.excerpt || "No description available."}
-            </p>
-
-            <Link href={`/blog/${post.slug}`} style={{
-              fontSize: "0.95rem",
-              fontWeight: 500,
-              marginTop: "0.5rem",
-              display: "inline-block",
-              color: "var(--accent-color)"
-            }}>
-              Read more →
-            </Link>
+            <h3 className="featured__title">
+              <Link href={postPath(featured.slug)}>{featured.meta.title}</Link>
+            </h3>
+            {featuredAbstract ? (
+              <p className="featured__abstract">{featuredAbstract}</p>
+            ) : null}
           </article>
-        ))}
+        </section>
+      ) : null}
 
-        {posts.length === 0 && (
-          <p>No posts found.</p>
-        )}
-      </div>
+      {latest.length > 0 ? (
+        <section className="front-section" aria-labelledby="latest-heading">
+          <div className="front-section__head">
+            <h2 id="latest-heading" className="section-label">
+              Latest
+            </h2>
+            <Link className="front-section__more" href="/archive">
+              View all →
+            </Link>
+          </div>
+          <div className="article-list">
+            {latest.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

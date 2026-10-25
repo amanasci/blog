@@ -5,6 +5,10 @@ title: "Context Compression"
 categories:
     - technical
 synopsis: A detailed/brief description of context compression and techniques used in LLM era. 
+abstract: >-
+    A survey of techniques for compressing long contexts in large language models. It covers
+    summarization and self-information pruning, soft-token memory, and OS-inspired paging, with
+    the whole survey framed by the efficiency-performance trade-off.
 ---
 
 Today we were talking about context compression and I just thought I should revisit the topic and read what has been happening in the field while also writing about it. This also helps me to process things better and this post will also be a good reference for me (and others) in the future. 

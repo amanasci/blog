@@ -1,98 +1,134 @@
-import { getPostBySlug, getAllPosts } from '@/lib/mdx';
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { format, parseISO, isValid } from 'date-fns';
+import { MDXRemote, type MDXRemoteProps } from 'next-mdx-remote/rsc';
 
-// Plugins
+import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
-// Components to be used in MDX
-const components = {
-    // Add custom components here if needed, e.g. <Callout />
-    img: (props: any) => (
-        <img
-            {...props}
-            style={{ display: 'block', maxWidth: '100%', height: 'auto', ...props.style }}
-        />
-    ),
+import ArticleHeader from '@/components/ArticleHeader';
+import Abstract from '@/components/Abstract';
+import Prose from '@/components/Prose';
+import mdxComponents from '@/components/MdxComponents';
+import { postPath } from '@/lib/paths';
+import { normalizeMathBlocks } from '@/lib/markdown';
+import {
+  estimateReadingTime,
+  getAllPosts,
+  getAdjacentPosts,
+  getPostBySlug,
+} from '@/lib/mdx';
+
+type PageParams = { params: Promise<{ slug: string }> };
+
+const mdxOptions: MDXRemoteProps['options'] = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm, remarkMath],
+    rehypePlugins: [
+      rehypeKatex,
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+      [
+        rehypePrettyCode,
+        {
+          theme: { light: 'github-light', dark: 'github-dark' },
+          keepBackground: false,
+        },
+      ],
+    ],
+  },
 };
 
-export async function generateStaticParams() {
-    const posts = getAllPosts();
-    return posts.map((post) => ({
-        slug: post.slug,
-    }));
+export function generateStaticParams() {
+  return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const post = await getPostBySlug(slug);
-    if (!post) return;
-    return {
-        title: `${post.meta.title} | My Blog`,
-        description: post.meta.description,
-    };
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
+  if (!post) return {};
+
+  const description =
+    post.meta.description ?? post.meta.synopsis ?? post.meta.abstract ?? undefined;
+
+  return {
+    title: post.meta.title,
+    description,
+    openGraph: {
+      title: post.meta.title,
+      description,
+      type: 'article',
+      publishedTime: post.meta.date || undefined,
+      tags: post.meta.categories,
+    },
+  };
 }
 
-export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const post = await getPostBySlug(slug);
+export default async function BlogPost({ params }: PageParams) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
-    if (!post) {
-        notFound();
-    }
+  if (!post) {
+    notFound();
+  }
 
-    const options = {
-        mdxOptions: {
-            remarkPlugins: [remarkMath],
-            rehypePlugins: [
-                rehypeKatex,
-                rehypeSlug,
-                [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-                [rehypePrettyCode, {
-                    theme: 'github-dark',
-                    keepBackground: true,
-                }],
-            ],
-        },
-    };
+  const { newer, older } = getAdjacentPosts(post.slug);
+  const numbered = post.meta.numbered ?? true;
 
-    return (
-        <article className="post">
-            <header style={{ marginBottom: "3rem", textAlign: "center" }}>
-                <h1 style={{
-                    fontSize: "2.5rem",
-                    marginBottom: "1rem"
-                }}>{post.meta.title}</h1>
+  return (
+    <div className="paper-stage">
+      <article className="paper">
+        <ArticleHeader meta={post.meta} readingTime={estimateReadingTime(post.content)} />
 
-                <div style={{ color: "var(--text-secondary)", fontFamily: "var(--font-sans)" }}>
-                    <time dateTime={post.meta.date}>
-                        {post.meta.date ? (() => {
-                            const parsedDate = parseISO(post.meta.date);
-                            return isValid(parsedDate) ? format(parsedDate, 'LLLL d, yyyy') : null;
-                        })() : null}
-                    </time>
-                </div>
-            </header>
+        <hr className="paper__rule" />
 
-            <div className="mdx-content">
-                <MDXRemote
-                    source={post.content}
-                    components={components}
-                    options={options as any}
-                />
-            </div>
+        {post.meta.abstract ? <Abstract text={post.meta.abstract} /> : null}
 
-            <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--border-color)" }}>
-                <Link href="/" style={{ fontWeight: 500 }}>
-                    ← Back to Home
-                </Link>
-            </div>
-        </article>
-    );
+        <Prose numbered={numbered}>
+          <MDXRemote
+            source={normalizeMathBlocks(post.content)}
+            components={mdxComponents}
+            options={mdxOptions}
+          />
+        </Prose>
+      </article>
+
+      <div className="paper-nav">
+        {(newer || older) && (
+          <nav className="article-nav" aria-label="More articles">
+            {newer ? (
+              <Link
+                href={postPath(newer.slug)}
+                className="article-nav__item article-nav__item--prev"
+                rel="prev"
+              >
+                <span className="article-nav__dir">Newer</span>
+                <span className="article-nav__title">{newer.meta.title}</span>
+              </Link>
+            ) : null}
+            {older ? (
+              <Link
+                href={postPath(older.slug)}
+                className="article-nav__item article-nav__item--next"
+                rel="next"
+              >
+                <span className="article-nav__dir">Older</span>
+                <span className="article-nav__title">{older.meta.title}</span>
+              </Link>
+            ) : null}
+          </nav>
+        )}
+
+        <div className="backlinks">
+          <Link href="/archive">← Archive</Link>
+          <Link href="/">← Home</Link>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -74,6 +74,10 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
+        env:
+          # Must match the basePath that actions/configure-pages injects for this
+          # GitHub Pages project site (repo: amanasci/blog -> /blog).
+          NEXT_PUBLIC_BASE_PATH: /blog
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
