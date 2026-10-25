@@ -22,9 +22,10 @@ export default function Home() {
           An independent journal of physics, computation, and curiosity.
         </h1>
         <p className="lede__text">
-          {site.name} collects technical research essays and exploratory notes: worked
-          problems, field notes, and the occasional detour. Written to be read the way a
-          paper is read, with care and with the working shown.
+          {site.name} is a personal research journal where I collect my learnings and
+          experiments. There’s a lot that goes on in my mind when I work, and not all of it
+          fits into a research paper, so I write it here instead. Usually about STEM
+          subjects. Why? Because STEM is fun.
         </p>
         <p className="lede__meta meta">
           <span>{posts.length} contributions</span>
